@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getInsertionSort } from "../sorting-algorithms";
+import {
+  getInsertionSort,
+  getMergeSortAnimations,
+} from "../sorting-algorithms";
 import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
 import { randomIntFromInterval } from "@/helpers";
@@ -37,6 +40,32 @@ export default function Home() {
     generateRandomArray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const runMergeSort = (): void => {
+    handleAbortClick();
+    const { signal } = abortController.current;
+
+    const animations = getMergeSortAnimations(
+      JSON.parse(JSON.stringify(barArray)) as Bars[]
+    );
+
+    const processAnimation = (index: number) => {
+      if (index < animations.length && !signal.aborted) {
+        const [barIdx, newHeight, isComparison] = animations[index];
+
+        setTimeout(() => {
+          setBarArray((prevArray) => {
+            const newArray = [...prevArray];
+            newArray[barIdx] = { number: newHeight, colour: isComparison };
+            return newArray;
+          });
+          processAnimation((index += 1));
+        }, 10);
+      }
+    };
+
+    processAnimation(0);
+  };
 
   const runInsertionSort = (): void => {
     handleAbortClick();
@@ -83,6 +112,7 @@ export default function Home() {
 
       <div className="flex flex-row space-x-4">
         <Button onClick={runInsertionSort}>Run Insertion Sort</Button>
+        <Button onClick={runMergeSort}>Run Merge Sort</Button>
         <Button onClick={generateRandomArray}>Generate New Array</Button>
         <Button onClick={handleAbortClick}>Abort sort</Button>
       </div>
