@@ -5,6 +5,8 @@ on:
     branches: ["main"]
 
   workflow_dispatch:
+permissions:
+  packages: read
 
 jobs:
   # Build job
