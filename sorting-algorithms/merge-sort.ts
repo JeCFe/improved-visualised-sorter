@@ -18,7 +18,6 @@ function mergeSortHelper(
   auxiliaryArray: Bars[],
   animations: [number, number, boolean][]
 ) {
-  const abc = mainArray;
   if (startIdx === endIdx) return;
   const middleIdx = Math.floor((startIdx + endIdx) / 2);
   mergeSortHelper(auxiliaryArray, startIdx, middleIdx, mainArray, animations);
@@ -34,28 +33,28 @@ function doMerge(
   auxiliaryArray: Bars[],
   animations: [number, number, boolean][]
 ) {
-  let k = startIdx;
-  let i = startIdx;
-  let j = middleIdx + 1;
-  while (i <= middleIdx && j <= endIdx) {
-    if (auxiliaryArray[i].number <= auxiliaryArray[j].number) {
-      animations.push([k, auxiliaryArray[i].number, true]);
-      animations.push([k, auxiliaryArray[i].number, false]); // might need removing
-      mainArray[k++].number = auxiliaryArray[i++].number;
+  let right = startIdx;
+  let left = startIdx;
+  let middle = middleIdx + 1;
+  while (left <= middleIdx && middle <= endIdx) {
+    if (auxiliaryArray[left].number <= auxiliaryArray[middle].number) {
+      animations.push([right, auxiliaryArray[left].number, true]);
+      animations.push([right, auxiliaryArray[left].number, false]); // might need removing
+      mainArray[right++].number = auxiliaryArray[left++].number;
     } else {
-      animations.push([k, auxiliaryArray[j].number, true]);
-      animations.push([k, auxiliaryArray[j].number, false]); //might need removing
-      mainArray[k++].number = auxiliaryArray[j++].number;
+      animations.push([right, auxiliaryArray[middle].number, true]);
+      animations.push([right, auxiliaryArray[middle].number, false]); //might need removing
+      mainArray[right++].number = auxiliaryArray[middle++].number;
     }
   }
-  while (i <= middleIdx) {
-    animations.push([k, auxiliaryArray[i].number, true]);
-    animations.push([k, auxiliaryArray[i].number, false]); //?
-    mainArray[k++].number = auxiliaryArray[i++].number;
+  while (left <= middleIdx) {
+    animations.push([right, auxiliaryArray[left].number, true]);
+    animations.push([right, auxiliaryArray[left].number, false]); //?
+    mainArray[right++].number = auxiliaryArray[left++].number;
   }
-  while (j <= endIdx) {
-    animations.push([k, auxiliaryArray[j].number, true]);
-    animations.push([k, auxiliaryArray[j].number, false]);
-    mainArray[k++].number = auxiliaryArray[j++].number;
+  while (middle <= endIdx) {
+    animations.push([right, auxiliaryArray[middle].number, true]);
+    animations.push([right, auxiliaryArray[middle].number, false]);
+    mainArray[right++].number = auxiliaryArray[middle++].number;
   }
 }
