@@ -1,18 +1,17 @@
 import { Bars } from "@/app/page";
+import { Animations } from "@/types";
 
 // sortingAlgorithms.ts
-export function getInsertionSort(
-  array: Readonly<Bars[]>
-): [number, number, boolean][] {
-  const animations: [number, number, boolean][] = [];
+export const getInsertionSort = (array: Readonly<Bars[]>) => {
+  const animations: Animations = [];
   const copiedArray = JSON.parse(JSON.stringify(array)) as Bars[];
   return insertionSortHelper(copiedArray, animations);
-}
+};
 
-function insertionSortHelper(
+const insertionSortHelper = (
   array: Readonly<Bars[]>,
-  animations: [number, number, boolean][]
-): [number, number, boolean][] {
+  animations: Animations
+) => {
   for (let i = 1; i < array.length; i++) {
     let key = array[i].number;
     let j = i - 1;
@@ -29,4 +28,4 @@ function insertionSortHelper(
   }
 
   return animations;
-}
+};

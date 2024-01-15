@@ -7,6 +7,8 @@ import {
 import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
 import { randomIntFromInterval } from "@/helpers";
+import { getBubbleSort } from "@/sorting-algorithms/bubble-sort";
+import { Animations } from "@/types";
 
 export type Bars = {
   number: number;
@@ -41,11 +43,13 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const runMergeSort = (): void => {
+  const runSortingAlgorithm = (
+    sortingFunction: (array: Bars[]) => Animations
+  ) => {
     handleAbortClick();
     const { signal } = abortController.current;
 
-    const animations = getMergeSortAnimations(
+    const animations = sortingFunction(
       JSON.parse(JSON.stringify(barArray)) as Bars[]
     );
 
@@ -67,27 +71,16 @@ export default function Home() {
     processAnimation(0);
   };
 
-  const runInsertionSort = (): void => {
-    handleAbortClick();
-    const { signal } = abortController.current;
-    const animations = getInsertionSort(barArray);
+  const runBubbleSort = () => {
+    runSortingAlgorithm(getBubbleSort);
+  };
 
-    const processAnimation = (index: number) => {
-      if (index < animations.length && !signal.aborted) {
-        const [barIdx, newHeight, isComparison] = animations[index];
+  const runMergeSort = () => {
+    runSortingAlgorithm(getMergeSortAnimations);
+  };
 
-        setTimeout(() => {
-          setBarArray((prevArray) => {
-            const newArray = [...prevArray];
-            newArray[barIdx] = { number: newHeight, colour: isComparison };
-            return newArray;
-          });
-          processAnimation((index += 1));
-        }, 10);
-      }
-    };
-
-    processAnimation(0);
+  const runInsertionSort = () => {
+    runSortingAlgorithm(getInsertionSort);
   };
 
   const handleAbortClick = () => {
@@ -97,15 +90,16 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center space-y-10">
-      <div className="flex flex-row items-end w-min">
+      <div className="flex flex-row items-end w-min h-[600px]">
         {barArray.map((bar, i) => (
           <div
             key={i}
             className={barColour({
               colour: bar.colour,
-              className: "w-2 inline-block my-0 mx-[2px]",
+              className: `w-2 inline-block my-0 mx-[2px] h-[${
+                bar.number * 0.6
+              }px]`,
             })}
-            style={{ height: `${bar.number * 0.6}px` }}
           />
         ))}
       </div>
@@ -113,6 +107,7 @@ export default function Home() {
       <div className="flex flex-row space-x-4">
         <Button onClick={runInsertionSort}>Run Insertion Sort</Button>
         <Button onClick={runMergeSort}>Run Merge Sort</Button>
+        <Button onClick={runBubbleSort}>Run Bubble Sort</Button>
         <Button onClick={generateRandomArray}>Generate New Array</Button>
         <Button onClick={handleAbortClick}>Abort sort</Button>
       </div>

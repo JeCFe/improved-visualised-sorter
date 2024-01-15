@@ -1,38 +1,37 @@
 import { Bars } from "@/app/page";
+import { Animations } from "@/types";
 
-export function getMergeSortAnimations(
-  array: Bars[]
-): [number, number, boolean][] {
-  const animations: [number, number, boolean][] = [];
+export const getMergeSortAnimations = (array: Bars[]) => {
+  const animations: Animations = [];
   if (array.length <= 1) return animations;
   const auxiliaryArray = JSON.parse(JSON.stringify(array)) as Bars[];
   const mainArray = JSON.parse(JSON.stringify(array)) as Bars[];
   mergeSortHelper(mainArray, 0, array.length - 1, auxiliaryArray, animations);
   return animations;
-}
+};
 
-function mergeSortHelper(
+const mergeSortHelper = (
   mainArray: Bars[],
   startIdx: number,
   endIdx: number,
   auxiliaryArray: Bars[],
-  animations: [number, number, boolean][]
-) {
+  animations: Animations
+) => {
   if (startIdx === endIdx) return;
   const middleIdx = Math.floor((startIdx + endIdx) / 2);
   mergeSortHelper(auxiliaryArray, startIdx, middleIdx, mainArray, animations);
   mergeSortHelper(auxiliaryArray, middleIdx + 1, endIdx, mainArray, animations);
   doMerge(mainArray, startIdx, middleIdx, endIdx, auxiliaryArray, animations);
-}
+};
 
-function doMerge(
+const doMerge = (
   mainArray: Bars[],
   startIdx: number,
   middleIdx: number,
   endIdx: number,
   auxiliaryArray: Bars[],
-  animations: [number, number, boolean][]
-) {
+  animations: Animations
+) => {
   let right = startIdx;
   let left = startIdx;
   let middle = middleIdx + 1;
@@ -57,4 +56,4 @@ function doMerge(
     animations.push([right, auxiliaryArray[middle].number, false]);
     mainArray[right++].number = auxiliaryArray[middle++].number;
   }
-}
+};
