@@ -96,10 +96,9 @@ export default function Home() {
             key={i}
             className={barColour({
               colour: bar.colour,
-              className: `w-2 inline-block my-0 mx-[2px] h-[${
-                bar.number * 0.6
-              }px]`,
+              className: "w-2 inline-block my-0 mx-[2px]",
             })}
+            style={{ height: `${bar.number * 0.6}px` }}
           />
         ))}
       </div>

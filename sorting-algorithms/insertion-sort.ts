@@ -1,7 +1,6 @@
 import { Bars } from "@/app/page";
 import { Animations } from "@/types";
 
-// sortingAlgorithms.ts
 export const getInsertionSort = (array: Readonly<Bars[]>) => {
   const animations: Animations = [];
   const copiedArray = JSON.parse(JSON.stringify(array)) as Bars[];
