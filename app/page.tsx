@@ -1,12 +1,16 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
-import { getInsertionSort, getMergeSort } from "../sorting-algorithms";
+import {
+  getInsertionSort,
+  getMergeSort,
+  getBubbleSort,
+  getHeapSort,
+} from "../sorting-algorithms";
 import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
 import { randomIntFromInterval } from "@/helpers";
-import { getBubbleSort } from "@/sorting-algorithms/bubble-sort";
 import { Animations, Bars } from "@/types";
-import { getHeapSort } from "@/sorting-algorithms/heap-sort";
 
 const barColour = cva("", {
   variants: {

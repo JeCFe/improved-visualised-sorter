@@ -2,13 +2,6 @@ import { Animations, Bars } from "@/types";
 
 export const getInsertionSort = (array: Readonly<Bars[]>) => {
   const animations: Animations = [];
-  return insertionSortHelper(array, animations);
-};
-
-const insertionSortHelper = (
-  array: Readonly<Bars[]>,
-  animations: Animations
-) => {
   for (let i = 1; i < array.length; i++) {
     let key = array[i].number;
     let j = i - 1;

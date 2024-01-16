@@ -1,10 +1,7 @@
+import { swap } from "@/helpers";
 import { Animations, Bars } from "@/types";
 
 export function getHeapSort(array: Bars[]) {
-  return heapSortHelper(array);
-}
-
-function heapSortHelper(array: Bars[]) {
   const animations: Animations = [];
   let arrayLength = array.length;
 
@@ -60,18 +57,16 @@ function heap(
 }
 
 function heapSwap(
-  arr: Bars[],
+  array: Bars[],
   firstIdx: number,
   lastIdx: number,
   animations: Animations
 ) {
-  animations.push([firstIdx, arr[lastIdx].number, true]);
-  animations.push([firstIdx, arr[lastIdx].number, false]);
+  animations.push([firstIdx, array[lastIdx].number, true]);
+  animations.push([firstIdx, array[lastIdx].number, false]);
 
-  animations.push([lastIdx, arr[firstIdx].number, true]);
-  animations.push([lastIdx, arr[firstIdx].number, false]);
+  animations.push([lastIdx, array[firstIdx].number, true]);
+  animations.push([lastIdx, array[firstIdx].number, false]);
 
-  const temp = arr[firstIdx];
-  arr[firstIdx] = arr[lastIdx];
-  arr[lastIdx] = temp;
+  swap(firstIdx, lastIdx, array);
 }
