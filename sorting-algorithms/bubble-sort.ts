@@ -1,6 +1,5 @@
-import { Bars } from "@/app/page";
 import { swap } from "@/helpers";
-import { Animations } from "@/types";
+import { Animations, Bars } from "@/types";
 
 export const getBubbleSort = (array: Bars[]) => {
   const animations: Animations = [];

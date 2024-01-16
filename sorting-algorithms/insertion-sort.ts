@@ -1,5 +1,4 @@
-import { Bars } from "@/app/page";
-import { Animations } from "@/types";
+import { Animations, Bars } from "@/types";
 
 export const getInsertionSort = (array: Readonly<Bars[]>) => {
   const animations: Animations = [];

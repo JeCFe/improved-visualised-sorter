@@ -8,12 +8,8 @@ import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
 import { randomIntFromInterval } from "@/helpers";
 import { getBubbleSort } from "@/sorting-algorithms/bubble-sort";
-import { Animations } from "@/types";
-
-export type Bars = {
-  number: number;
-  colour: boolean;
-};
+import { Animations, Bars } from "@/types";
+import { getHeapSort } from "@/sorting-algorithms/heap-sort";
 
 const barColour = cva("", {
   variants: {
@@ -83,6 +79,10 @@ export default function Home() {
     runSortingAlgorithm(getInsertionSort);
   };
 
+  const runHeapSort = () => {
+    runSortingAlgorithm(getHeapSort);
+  };
+
   const handleAbortClick = () => {
     abortController.current.abort();
     abortController.current = new AbortController();
@@ -107,6 +107,7 @@ export default function Home() {
         <Button onClick={runInsertionSort}>Run Insertion Sort</Button>
         <Button onClick={runMergeSort}>Run Merge Sort</Button>
         <Button onClick={runBubbleSort}>Run Bubble Sort</Button>
+        <Button onClick={runHeapSort}>Run Heap Sort</Button>
         <Button onClick={generateRandomArray}>Generate New Array</Button>
         <Button onClick={handleAbortClick}>Abort sort</Button>
       </div>
