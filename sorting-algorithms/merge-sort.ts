@@ -1,12 +1,10 @@
-import { Bars } from "@/app/page";
-import { Animations } from "@/types";
+import { Animations, Bars } from "@/types";
 
-export const getMergeSortAnimations = (array: Bars[]) => {
+export const getMergeSort = (array: Bars[]) => {
   const animations: Animations = [];
   if (array.length <= 1) return animations;
   const auxiliaryArray = JSON.parse(JSON.stringify(array)) as Bars[];
-  const mainArray = JSON.parse(JSON.stringify(array)) as Bars[];
-  mergeSortHelper(mainArray, 0, array.length - 1, auxiliaryArray, animations);
+  mergeSortHelper(array, 0, array.length - 1, auxiliaryArray, animations);
   return animations;
 };
 

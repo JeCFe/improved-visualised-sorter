@@ -1,19 +1,16 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import {
   getInsertionSort,
-  getMergeSortAnimations,
+  getMergeSort,
+  getBubbleSort,
+  getHeapSort,
 } from "../sorting-algorithms";
 import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
 import { randomIntFromInterval } from "@/helpers";
-import { getBubbleSort } from "@/sorting-algorithms/bubble-sort";
-import { Animations } from "@/types";
-
-export type Bars = {
-  number: number;
-  colour: boolean;
-};
+import { Animations, Bars } from "@/types";
 
 const barColour = cva("", {
   variants: {
@@ -76,11 +73,15 @@ export default function Home() {
   };
 
   const runMergeSort = () => {
-    runSortingAlgorithm(getMergeSortAnimations);
+    runSortingAlgorithm(getMergeSort);
   };
 
   const runInsertionSort = () => {
     runSortingAlgorithm(getInsertionSort);
+  };
+
+  const runHeapSort = () => {
+    runSortingAlgorithm(getHeapSort);
   };
 
   const handleAbortClick = () => {
@@ -107,6 +108,7 @@ export default function Home() {
         <Button onClick={runInsertionSort}>Run Insertion Sort</Button>
         <Button onClick={runMergeSort}>Run Merge Sort</Button>
         <Button onClick={runBubbleSort}>Run Bubble Sort</Button>
+        <Button onClick={runHeapSort}>Run Heap Sort</Button>
         <Button onClick={generateRandomArray}>Generate New Array</Button>
         <Button onClick={handleAbortClick}>Abort sort</Button>
       </div>
