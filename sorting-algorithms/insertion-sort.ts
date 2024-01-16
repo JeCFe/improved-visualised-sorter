@@ -2,8 +2,7 @@ import { Animations, Bars } from "@/types";
 
 export const getInsertionSort = (array: Readonly<Bars[]>) => {
   const animations: Animations = [];
-  const copiedArray = JSON.parse(JSON.stringify(array)) as Bars[];
-  return insertionSortHelper(copiedArray, animations);
+  return insertionSortHelper(array, animations);
 };
 
 const insertionSortHelper = (

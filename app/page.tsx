@@ -1,9 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import {
-  getInsertionSort,
-  getMergeSortAnimations,
-} from "../sorting-algorithms";
+import { getInsertionSort, getMergeSort } from "../sorting-algorithms";
 import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
 import { randomIntFromInterval } from "@/helpers";
@@ -72,7 +69,7 @@ export default function Home() {
   };
 
   const runMergeSort = () => {
-    runSortingAlgorithm(getMergeSortAnimations);
+    runSortingAlgorithm(getMergeSort);
   };
 
   const runInsertionSort = () => {

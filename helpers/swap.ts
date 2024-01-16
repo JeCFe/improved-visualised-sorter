@@ -1,4 +1,4 @@
-import { Bars } from "@/app/page";
+import { Bars } from "@/types";
 
 export const swap = (i: number, j: number, array: Bars[]) => {
   let temp = array[j];
