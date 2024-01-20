@@ -33,8 +33,9 @@ function heap(
     array[leftChildIndex].number > array[maxIndex].number
   ) {
     animations.push([leftChildIndex, array[maxIndex].number, true]);
-    animations.push([leftChildIndex, array[maxIndex].number, false]);
     animations.push([currentIndex, array[currentIndex].number, true]);
+
+    animations.push([leftChildIndex, array[maxIndex].number, false]);
     animations.push([currentIndex, array[currentIndex].number, false]);
     maxIndex = leftChildIndex;
   }
@@ -44,8 +45,9 @@ function heap(
     array[rightChildIndex].number > array[maxIndex].number
   ) {
     animations.push([rightChildIndex, array[maxIndex].number, true]);
-    animations.push([rightChildIndex, array[maxIndex].number, false]);
     animations.push([currentIndex, array[currentIndex].number, true]);
+
+    animations.push([rightChildIndex, array[maxIndex].number, false]);
     animations.push([currentIndex, array[currentIndex].number, false]);
     maxIndex = rightChildIndex;
   }
@@ -63,9 +65,9 @@ function heapSwap(
   animations: Animations
 ) {
   animations.push([firstIdx, array[lastIdx].number, true]);
-  animations.push([firstIdx, array[lastIdx].number, false]);
-
   animations.push([lastIdx, array[firstIdx].number, true]);
+
+  animations.push([firstIdx, array[lastIdx].number, false]);
   animations.push([lastIdx, array[firstIdx].number, false]);
 
   swap(firstIdx, lastIdx, array);
