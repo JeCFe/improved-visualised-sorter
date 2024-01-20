@@ -11,6 +11,7 @@ import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
 import { randomIntFromInterval } from "@/helpers";
 import { Animations, Bars } from "@/types";
+import { getQuickSort } from "@/sorting-algorithms/quick-sort";
 
 const barColour = cva("", {
   variants: {
@@ -68,6 +69,9 @@ export default function Home() {
     processAnimation(0);
   };
 
+  const runQuickeSort = () => {
+    runSortingAlgorithm(getQuickSort);
+  };
   const runBubbleSort = () => {
     runSortingAlgorithm(getBubbleSort);
   };
@@ -109,6 +113,7 @@ export default function Home() {
         <Button onClick={runMergeSort}>Run Merge Sort</Button>
         <Button onClick={runBubbleSort}>Run Bubble Sort</Button>
         <Button onClick={runHeapSort}>Run Heap Sort</Button>
+        <Button onClick={runQuickeSort}>Run Quick Sort</Button>
         <Button onClick={generateRandomArray}>Generate New Array</Button>
         <Button onClick={handleAbortClick}>Abort sort</Button>
       </div>
