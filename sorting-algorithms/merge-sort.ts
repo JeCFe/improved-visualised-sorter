@@ -34,21 +34,27 @@ const doMerge = (
   let left = startIdx;
   let middle = middleIdx + 1;
   while (left <= middleIdx && middle <= endIdx) {
+    animations.push([middle, auxiliaryArray[middle].number, true]);
+
     if (auxiliaryArray[left].number <= auxiliaryArray[middle].number) {
       animations.push([right, auxiliaryArray[left].number, true]);
+      animations.push([middle, auxiliaryArray[middle].number, false]);
       animations.push([right, auxiliaryArray[left].number, false]);
       mainArray[right++].number = auxiliaryArray[left++].number;
     } else {
       animations.push([right, auxiliaryArray[middle].number, true]);
+      animations.push([middle, auxiliaryArray[middle].number, false]);
       animations.push([right, auxiliaryArray[middle].number, false]);
       mainArray[right++].number = auxiliaryArray[middle++].number;
     }
   }
+
   while (left <= middleIdx) {
     animations.push([right, auxiliaryArray[left].number, true]);
     animations.push([right, auxiliaryArray[left].number, false]);
     mainArray[right++].number = auxiliaryArray[left++].number;
   }
+
   while (middle <= endIdx) {
     animations.push([right, auxiliaryArray[middle].number, true]);
     animations.push([right, auxiliaryArray[middle].number, false]);
