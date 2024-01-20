@@ -95,7 +95,14 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center space-y-10">
-      <div className="flex flex-row items-end w-min h-[600px]">
+      <div className="flex flex-row space-x-4 pt-10">
+        <Button onClick={runInsertionSort}>Run Insertion Sort</Button>
+        <Button onClick={runMergeSort}>Run Merge Sort</Button>
+        <Button onClick={runBubbleSort}>Run Bubble Sort</Button>
+        <Button onClick={runHeapSort}>Run Heap Sort</Button>
+        <Button onClick={runQuickeSort}>Run Quick Sort</Button>
+      </div>
+      <div className="flex flex-row items-end w-min h-[600px] ">
         {barArray.map((bar, i) => (
           <div
             key={i}
@@ -108,14 +115,12 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="flex flex-row space-x-4">
-        <Button onClick={runInsertionSort}>Run Insertion Sort</Button>
-        <Button onClick={runMergeSort}>Run Merge Sort</Button>
-        <Button onClick={runBubbleSort}>Run Bubble Sort</Button>
-        <Button onClick={runHeapSort}>Run Heap Sort</Button>
-        <Button onClick={runQuickeSort}>Run Quick Sort</Button>
+      <div className="flex flex-row space-x-5">
         <Button onClick={generateRandomArray}>Generate New Array</Button>
-        <Button onClick={handleAbortClick}>Abort sort</Button>
+
+        <Button variant="secondary" onClick={handleAbortClick}>
+          Abort sort
+        </Button>
       </div>
     </div>
   );
