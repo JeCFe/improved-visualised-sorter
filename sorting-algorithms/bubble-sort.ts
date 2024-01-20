@@ -3,9 +3,8 @@ import { Animations, Bars } from "@/types";
 
 export const getBubbleSort = (array: Bars[]) => {
   const animations: Animations = [];
-  const n = array.length;
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = 0; j < n - i - 1; j++) {
+  for (let i = 0; i < array.length - 1; i++) {
+    for (let j = 0; j < array.length - i - 1; j++) {
       if (array[j].number > array[j + 1].number) {
         animations.push([j, array[j + 1].number, true]);
         animations.push([j, array[j + 1].number, false]);

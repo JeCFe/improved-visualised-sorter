@@ -6,12 +6,13 @@ import {
   getMergeSort,
   getBubbleSort,
   getHeapSort,
+  getQuickSort,
+  getSelectionSort,
 } from "../sorting-algorithms";
 import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
 import { randomIntFromInterval } from "@/helpers";
 import { Animations, Bars } from "@/types";
-import { getQuickSort } from "@/sorting-algorithms/quick-sort";
 
 const barColour = cva("", {
   variants: {
@@ -88,6 +89,10 @@ export default function Home() {
     runSortingAlgorithm(getHeapSort);
   };
 
+  const runSelectionSort = () => {
+    runSortingAlgorithm(getSelectionSort);
+  };
+
   const handleAbortClick = () => {
     abortController.current.abort();
     abortController.current = new AbortController();
@@ -101,6 +106,7 @@ export default function Home() {
         <Button onClick={runBubbleSort}>Run Bubble Sort</Button>
         <Button onClick={runHeapSort}>Run Heap Sort</Button>
         <Button onClick={runQuickeSort}>Run Quick Sort</Button>
+        <Button onClick={runSelectionSort}>Run Selection Sort</Button>
       </div>
       <div className="flex flex-row items-end w-min h-[600px] ">
         {barArray.map((bar, i) => (

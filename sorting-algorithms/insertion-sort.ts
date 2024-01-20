@@ -2,9 +2,10 @@ import { Animations, Bars } from "@/types";
 
 export const getInsertionSort = (array: Readonly<Bars[]>) => {
   const animations: Animations = [];
-  for (let i = 1; i < array.length; i++) {
-    let key = array[i].number;
-    let j = i - 1;
+
+  array.forEach((_, index) => {
+    let key = array[index].number;
+    let j = index - 1;
 
     while (j >= 0 && array[j].number > key) {
       animations.push([j + 1, array[j].number, true]);
@@ -15,7 +16,7 @@ export const getInsertionSort = (array: Readonly<Bars[]>) => {
     animations.push([j + 1, key, true]);
     animations.push([j + 1, key, false]);
     array[j + 1].number = key;
-  }
+  });
 
   return animations;
 };
