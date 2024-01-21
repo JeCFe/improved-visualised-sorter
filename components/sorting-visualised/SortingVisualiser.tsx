@@ -1,6 +1,8 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
+import { Button, RadioButton } from "@jecfe/react-design-system";
+import { Algorithms, Animations, ArrayConfig, Bars } from "@/types";
+import { generateArray } from "@/helpers/generate-array";
 import {
   getInsertionSort,
   getMergeSort,
@@ -8,19 +10,17 @@ import {
   getHeapSort,
   getQuickSort,
   getSelectionSort,
-} from "../../sorting-algorithms";
-import { Button } from "@jecfe/react-design-system";
-import { randomIntFromInterval } from "@/helpers";
-import { Animations, Bars } from "@/types";
+} from "@/sorting-algorithms";
 import { cva } from "class-variance-authority";
+import cloneDeep from "lodash/cloneDeep";
 
-const sortingAlgorithms = [
-  { label: "Insertion Sort", func: getInsertionSort },
-  { label: "Merge Sort", func: getMergeSort },
-  { label: "Bubble Sort", func: getBubbleSort },
-  { label: "Heap Sort", func: getHeapSort },
-  { label: "Quick Sort", func: getQuickSort },
-  { label: "Selection Sort", func: getSelectionSort },
+const sortingAlgorithms: Algorithms[] = [
+  { label: "Insertion", func: getInsertionSort },
+  { label: "Merge", func: getMergeSort },
+  { label: "Bubble", func: getBubbleSort },
+  { label: "Heap", func: getHeapSort },
+  { label: "Quick", func: getQuickSort },
+  { label: "Selection", func: getSelectionSort },
 ];
 
 export const barColour = cva("", {
@@ -36,24 +36,40 @@ export const barColour = cva("", {
 
 export function SortingVisualised() {
   const [barArray, setBarArray] = useState<Bars[]>([]);
-  const [sortingPreformance, setSortingPreformance] = useState<number>();
+  const [sortingPerformance, setsortingPerformance] = useState<number>();
   const [renderPreformance, setRenderingPreformance] = useState<number>();
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState<Algorithms>(
+    sortingAlgorithms[0]
+  );
+  const [arrayConfig, setArrayConfig] = useState<ArrayConfig>({
+    length: 100,
+    min: 5,
+    max: 1000,
+  });
   const abortController = useRef(new AbortController());
+
+  const arrayGeneration = () => generateArray(arrayConfig);
+
+  const sortedReverseArray = () => {
+    handleAbortClick();
+    setBarArray(
+      [...arrayGeneration()].sort((a, b) => a.number - b.number).reverse()
+    );
+  };
+
+  const sortedArray = () => {
+    handleAbortClick();
+    setBarArray([...arrayGeneration()].sort((a, b) => a.number - b.number));
+  };
 
   useEffect(() => {
     generateRandomArray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const generateRandomArray = (): void => {
+  const generateRandomArray = () => {
     handleAbortClick();
-
-    setBarArray(
-      Array.from({ length: 100 }, () => ({
-        number: randomIntFromInterval(5, 1000),
-        colour: "black",
-      }))
-    );
+    setBarArray(arrayGeneration());
   };
 
   const validateSort = (array: Bars[]) => {
@@ -87,15 +103,15 @@ export function SortingVisualised() {
   const runSortingAlgorithm = (
     sortingFunction: (array: Bars[]) => Animations
   ) => {
-    setSortingPreformance(undefined);
+    setsortingPerformance(undefined);
     setRenderingPreformance(undefined);
     handleAbortClick();
     const { signal } = abortController.current;
-    const mutableArray = JSON.parse(JSON.stringify(barArray)) as Bars[];
+    const mutableArray = cloneDeep(barArray);
     const start = performance.now();
     const animations = sortingFunction(mutableArray);
     const end = performance.now();
-    setSortingPreformance(end - start);
+    setsortingPerformance(end - start);
 
     const renderStart = performance.now();
     const processAnimation = (index: number) => {
@@ -127,14 +143,28 @@ export function SortingVisualised() {
 
   return (
     <div className="flex flex-col items-center space-y-10">
-      <div className="flex flex-row space-x-4 pt-10">
-        {sortingAlgorithms.map((algorithm) => (
-          <Button
-            key={algorithm.label}
-            onClick={() => runSortingAlgorithm(algorithm.func)}
-          >{`${algorithm.label}`}</Button>
-        ))}
+      <div className="flex flex-row space-x-12 justify-center">
+        <div className="flex flex-row items-center">
+          {sortingAlgorithms.map((algorithm) => (
+            <RadioButton
+              key={algorithm.label}
+              name="sorting algorithm"
+              value={algorithm.label}
+              defaultChecked={selectedAlgorithm === algorithm}
+              onClick={() => setSelectedAlgorithm(algorithm)}
+              className="px-4"
+            >{`${algorithm.label}`}</RadioButton>
+          ))}
+        </div>
+
+        <Button
+          className="flex"
+          onClick={() => runSortingAlgorithm(selectedAlgorithm.func)}
+        >
+          Sort!
+        </Button>
       </div>
+      <div className="w-max"></div>
       <div className="flex flex-row items-end w-min h-[600px] ">
         {barArray.map((bar, i) => (
           <div
@@ -149,7 +179,9 @@ export function SortingVisualised() {
       </div>
 
       <div className="flex flex-row space-x-5">
-        <Button onClick={generateRandomArray}>Generate New Array</Button>
+        <Button onClick={generateRandomArray}>Generate Random Array</Button>
+        <Button onClick={sortedReverseArray}>Generate Sorted Array</Button>
+        <Button onClick={sortedArray}>Generate Sorted Reverse Array</Button>
         <Button variant="secondary" onClick={handleAbortClick}>
           Abort sort
         </Button>
@@ -157,7 +189,7 @@ export function SortingVisualised() {
       <div className="flex flex-row w-full">
         <div className="flex items-start">
           Time taken to compute (ms):{" "}
-          {sortingPreformance?.toFixed(3) ?? "awaiting results"}
+          {sortingPerformance?.toFixed(3) ?? "awaiting results"}
         </div>
         <div className="grow" />
         <div className="flex items-end">
