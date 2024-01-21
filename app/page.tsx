@@ -87,6 +87,8 @@ export default function Home() {
   const runSortingAlgorithm = (
     sortingFunction: (array: Bars[]) => Animations
   ) => {
+    setSortingPreformance(undefined);
+    setRenderingPreformance(undefined);
     handleAbortClick();
     const { signal } = abortController.current;
     const mutableArray = JSON.parse(JSON.stringify(barArray)) as Bars[];
@@ -123,8 +125,6 @@ export default function Home() {
       runSortingAlgorithm(sortingFunction);
 
   const handleAbortClick = () => {
-    setSortingPreformance(undefined);
-    setRenderingPreformance(undefined);
     abortController.current.abort();
     abortController.current = new AbortController();
   };
