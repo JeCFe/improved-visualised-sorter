@@ -16,8 +16,11 @@ function selectionSwap(array: Bars[], animations: Animations) {
       animations.push([j, array[j].number, "red"]);
       animations.push([j, array[j].number, "black"]);
 
-      if (array[j].number < array[minIndex].number && minIndex !== 1) {
-        animations.push([minIndex, array[minIndex].number, "black"]);
+      if (array[j].number < array[minIndex].number) {
+        if (minIndex !== i) {
+          animations.push([minIndex, array[minIndex].number, "black"]);
+        }
+
         minIndex = j;
       }
     }
