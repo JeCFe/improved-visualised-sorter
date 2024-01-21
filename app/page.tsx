@@ -26,7 +26,7 @@ export default function Home() {
     setBarArray(
       Array.from({ length: 100 }, () => ({
         number: randomIntFromInterval(5, 1000),
-        colour: false,
+        colour: "black",
       }))
     );
   };

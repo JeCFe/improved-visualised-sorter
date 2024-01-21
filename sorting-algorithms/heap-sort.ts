@@ -32,11 +32,11 @@ function heap(
     leftChildIndex < arrayLength &&
     array[leftChildIndex].number > array[maxIndex].number
   ) {
-    animations.push([leftChildIndex, array[maxIndex].number, true]);
-    animations.push([currentIndex, array[currentIndex].number, true]);
+    animations.push([leftChildIndex, array[maxIndex].number, "red"]);
+    animations.push([currentIndex, array[currentIndex].number, "red"]);
 
-    animations.push([leftChildIndex, array[maxIndex].number, false]);
-    animations.push([currentIndex, array[currentIndex].number, false]);
+    animations.push([leftChildIndex, array[maxIndex].number, "black"]);
+    animations.push([currentIndex, array[currentIndex].number, "black"]);
     maxIndex = leftChildIndex;
   }
 
@@ -44,11 +44,11 @@ function heap(
     rightChildIndex < arrayLength &&
     array[rightChildIndex].number > array[maxIndex].number
   ) {
-    animations.push([rightChildIndex, array[maxIndex].number, true]);
-    animations.push([currentIndex, array[currentIndex].number, true]);
+    animations.push([rightChildIndex, array[maxIndex].number, "red"]);
+    animations.push([currentIndex, array[currentIndex].number, "red"]);
 
-    animations.push([rightChildIndex, array[maxIndex].number, false]);
-    animations.push([currentIndex, array[currentIndex].number, false]);
+    animations.push([rightChildIndex, array[maxIndex].number, "black"]);
+    animations.push([currentIndex, array[currentIndex].number, "black"]);
     maxIndex = rightChildIndex;
   }
 
@@ -64,11 +64,11 @@ function heapSwap(
   lastIdx: number,
   animations: Animations
 ) {
-  animations.push([firstIdx, array[lastIdx].number, true]);
-  animations.push([lastIdx, array[firstIdx].number, true]);
+  animations.push([firstIdx, array[lastIdx].number, "red"]);
+  animations.push([lastIdx, array[firstIdx].number, "red"]);
 
-  animations.push([firstIdx, array[lastIdx].number, false]);
-  animations.push([lastIdx, array[firstIdx].number, false]);
+  animations.push([firstIdx, array[lastIdx].number, "black"]);
+  animations.push([lastIdx, array[firstIdx].number, "black"]);
 
   swap(firstIdx, lastIdx, array);
 }

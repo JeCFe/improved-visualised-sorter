@@ -26,21 +26,21 @@ function quickSortHelper(
       array[leftIndex].number > array[pivot].number &&
       array[rightIndex].number < array[pivot].number
     ) {
-      animations.push([leftIndex, array[rightIndex].number, true]);
-      animations.push([leftIndex, array[rightIndex].number, false]);
-      animations.push([rightIndex, array[leftIndex].number, true]);
-      animations.push([rightIndex, array[leftIndex].number, false]);
+      animations.push([leftIndex, array[rightIndex].number, "red"]);
+      animations.push([leftIndex, array[rightIndex].number, "black"]);
+      animations.push([rightIndex, array[leftIndex].number, "red"]);
+      animations.push([rightIndex, array[leftIndex].number, "black"]);
       swap(leftIndex, rightIndex, array);
     }
 
     if (array[leftIndex].number <= array[pivot].number) leftIndex++;
     if (array[rightIndex].number >= array[pivot].number) rightIndex--;
   }
-  animations.push([rightIndex, array[pivot].number, true]);
-  animations.push([pivot, array[rightIndex].number, true]);
+  animations.push([rightIndex, array[pivot].number, "red"]);
+  animations.push([pivot, array[rightIndex].number, "red"]);
 
-  animations.push([rightIndex, array[pivot].number, false]);
-  animations.push([pivot, array[rightIndex].number, false]);
+  animations.push([rightIndex, array[pivot].number, "black"]);
+  animations.push([pivot, array[rightIndex].number, "black"]);
 
   swap(pivot, rightIndex, array);
 

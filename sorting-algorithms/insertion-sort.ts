@@ -8,13 +8,13 @@ export const getInsertionSort = (array: Readonly<Bars[]>) => {
     let j = index - 1;
 
     while (j >= 0 && array[j].number > key) {
-      animations.push([j + 1, array[j].number, true]);
-      animations.push([j + 1, array[j].number, false]);
+      animations.push([j + 1, array[j].number, "red"]);
+      animations.push([j + 1, array[j].number, "black"]);
       array[j + 1].number = array[j].number;
       j = j - 1;
     }
-    animations.push([j + 1, key, true]);
-    animations.push([j + 1, key, false]);
+    animations.push([j + 1, key, "red"]);
+    animations.push([j + 1, key, "black"]);
     array[j + 1].number = key;
   });
 

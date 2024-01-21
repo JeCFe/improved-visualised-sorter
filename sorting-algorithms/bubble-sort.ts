@@ -6,15 +6,15 @@ export const getBubbleSort = (array: Bars[]) => {
   for (let i = 0; i < array.length - 1; i++) {
     for (let j = 0; j < array.length - i - 1; j++) {
       if (array[j].number > array[j + 1].number) {
-        animations.push([j, array[j + 1].number, true]);
-        animations.push([j, array[j + 1].number, false]);
-        animations.push([j + 1, array[j].number, true]);
-        animations.push([j + 1, array[j].number, false]);
+        animations.push([j, array[j + 1].number, "red"]);
+        animations.push([j, array[j + 1].number, "black"]);
+        animations.push([j + 1, array[j].number, "red"]);
+        animations.push([j + 1, array[j].number, "black"]);
         swap(j, j + 1, array);
       } else {
         if (j != 0) {
-          animations.push([j - 1, array[j - 1].number, true]);
-          animations.push([j - 1, array[j - 1].number, false]);
+          animations.push([j - 1, array[j - 1].number, "red"]);
+          animations.push([j - 1, array[j - 1].number, "black"]);
         }
       }
     }
