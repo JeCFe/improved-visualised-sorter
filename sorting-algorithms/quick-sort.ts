@@ -5,7 +5,6 @@ export const getQuickSort = (array: Bars[]) => {
   const animations: Animations = [];
   quickSortHelper(array, 0, array.length - 1, animations);
   const x = array.map((x) => x.number);
-  console.log("array", x);
   return animations;
 };
 

@@ -1,5 +1,5 @@
 import { VariantProps } from "class-variance-authority";
-import { barColour } from "@/helpers";
+import { barColour } from "@/app/page";
 
 export type Animations = [
   number,
