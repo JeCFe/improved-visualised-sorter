@@ -40,6 +40,11 @@ export default function Home() {
   const [renderPreformance, setRenderingPreformance] = useState<number>();
   const abortController = useRef(new AbortController());
 
+  useEffect(() => {
+    generateRandomArray();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const generateRandomArray = (): void => {
     handleAbortClick();
 
@@ -50,11 +55,6 @@ export default function Home() {
       }))
     );
   };
-
-  useEffect(() => {
-    generateRandomArray();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const validateSort = (array: Bars[]) => {
     handleAbortClick();
@@ -120,10 +120,6 @@ export default function Home() {
     processAnimation(0);
   };
 
-  const handleSortClick =
-    (sortingFunction: (array: Bars[]) => Animations) => () =>
-      runSortingAlgorithm(sortingFunction);
-
   const handleAbortClick = () => {
     abortController.current.abort();
     abortController.current = new AbortController();
@@ -135,7 +131,7 @@ export default function Home() {
         {sortingAlgorithms.map((algorithm) => (
           <Button
             key={algorithm.label}
-            onClick={handleSortClick(algorithm.func)}
+            onClick={() => runSortingAlgorithm(algorithm.func)}
           >{`${algorithm.label}`}</Button>
         ))}
       </div>
