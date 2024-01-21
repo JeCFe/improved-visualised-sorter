@@ -1,8 +1,11 @@
-# Next.js Typescript Client
+# Improved visualised sorting
 
-Building blocks for a Next.js client that has Auth0 authentication setup.
+In 2021 I had completed a project of creating a visual sorting in React JavaScript, this was my first React project. This project has been rebuilt in Next / React TypeScript, where the legacy code has been refactored and converted over to TypeScript and better coding practices have been implemented.
 
-Using Next API Routes to handle external API calls, this has been typed by using a TS client.
+This project can be viewed on: https://jecfe.github.io/improved-visualised-sorter/
+
+Legacy repo: https://github.com/JeCFe/Sorted-Visualiser
+Legacy github pages: https://jecfe.github.io/VisualisedSorter/
 
 ## Local Run
 
@@ -10,27 +13,5 @@ Install Client with npm
 
 ```bash
   npm install
-  npm run build:client
   npm run dev
 ```
-
-In this `build:client` refers to building the TS client from the api-spec.json built by the dotnet server.
-
-In event TS Client does not build, look at the Server readme for more instructions.
-
-## Environment Variables
-
-These enviroment variables are required in a `.env.local`. For `BASE_URL` set this as your backend service, if you have more than one backend service add new variables. Look at `getApiClient`for a plan on how to set up additional clients.
-
-```bash
-AUTH0_SECRET=
-AUTH0_BASE_URL=
-AUTH0_ISSUER_BASE_URL=
-AUTH0_CLIENT_ID=
-AUTH0_CLIENT_SECRET=
-BASE_URL=
-```
-
-## Auth0
-
-Requires Auth0 account and knowledge, please look at the Auth0 documentation for further details [Auth0 Next.js Quickstart](https://auth0.com/docs/quickstart/webapp/nextjs).
