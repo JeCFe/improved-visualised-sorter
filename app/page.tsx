@@ -11,30 +11,24 @@ import {
 } from "../sorting-algorithms";
 import { Button } from "@jecfe/react-design-system";
 import { cva } from "class-variance-authority";
-import { randomIntFromInterval } from "@/helpers";
+import { barColour, randomIntFromInterval } from "@/helpers";
 import { Animations, Bars } from "@/types";
-
-const barColour = cva("", {
-  variants: {
-    colour: {
-      true: "bg-yellow-500",
-      false: "bg-black",
-    },
-  },
-  defaultVariants: { colour: false },
-});
 
 export default function Home() {
   const [barArray, setBarArray] = useState<Bars[]>([]);
+  const [sortingPreformance, setSortingPreformance] = useState<number>();
+  const [renderPreformance, setRenderingPreformance] = useState<number>();
   const abortController = useRef(new AbortController());
 
   const generateRandomArray = (): void => {
     handleAbortClick();
-    const newArray: Bars[] = [];
-    for (let i = 0; i < 100; i++) {
-      newArray.push({ number: randomIntFromInterval(5, 1000), colour: false });
-    }
-    setBarArray(newArray);
+
+    setBarArray(
+      Array.from({ length: 100 }, () => ({
+        number: randomIntFromInterval(5, 1000),
+        colour: false,
+      }))
+    );
   };
 
   useEffect(() => {
@@ -48,14 +42,17 @@ export default function Home() {
     handleAbortClick();
     const { signal } = abortController.current;
 
+    const start = performance.now();
     const animations = sortingFunction(
       JSON.parse(JSON.stringify(barArray)) as Bars[]
     );
+    const end = performance.now();
+    setSortingPreformance(end - start);
 
+    const renderStart = performance.now();
     const processAnimation = (index: number) => {
       if (index < animations.length && !signal.aborted) {
         const [barIdx, newHeight, isComparison] = animations[index];
-
         setTimeout(() => {
           setBarArray((prevArray) => {
             const newArray = [...prevArray];
@@ -65,35 +62,22 @@ export default function Home() {
           processAnimation((index += 1));
         }, 10);
       }
+      const renderEnd = performance.now();
+      setRenderingPreformance((renderEnd - renderStart) / 1000);
     };
-
     processAnimation(0);
   };
 
-  const runQuickeSort = () => {
-    runSortingAlgorithm(getQuickSort);
-  };
-  const runBubbleSort = () => {
-    runSortingAlgorithm(getBubbleSort);
-  };
-
-  const runMergeSort = () => {
-    runSortingAlgorithm(getMergeSort);
-  };
-
-  const runInsertionSort = () => {
-    runSortingAlgorithm(getInsertionSort);
-  };
-
-  const runHeapSort = () => {
-    runSortingAlgorithm(getHeapSort);
-  };
-
-  const runSelectionSort = () => {
-    runSortingAlgorithm(getSelectionSort);
-  };
+  const runQuickSort = () => runSortingAlgorithm(getQuickSort);
+  const runBubbleSort = () => runSortingAlgorithm(getBubbleSort);
+  const runMergeSort = () => runSortingAlgorithm(getMergeSort);
+  const runInsertionSort = () => runSortingAlgorithm(getInsertionSort);
+  const runHeapSort = () => runSortingAlgorithm(getHeapSort);
+  const runSelectionSort = () => runSortingAlgorithm(getSelectionSort);
 
   const handleAbortClick = () => {
+    setSortingPreformance(undefined);
+    setRenderingPreformance(undefined);
     abortController.current.abort();
     abortController.current = new AbortController();
   };
@@ -105,7 +89,7 @@ export default function Home() {
         <Button onClick={runMergeSort}>Run Merge Sort</Button>
         <Button onClick={runBubbleSort}>Run Bubble Sort</Button>
         <Button onClick={runHeapSort}>Run Heap Sort</Button>
-        <Button onClick={runQuickeSort}>Run Quick Sort</Button>
+        <Button onClick={runQuickSort}>Run Quick Sort</Button>
         <Button onClick={runSelectionSort}>Run Selection Sort</Button>
       </div>
       <div className="flex flex-row items-end w-min h-[600px] ">
@@ -123,10 +107,20 @@ export default function Home() {
 
       <div className="flex flex-row space-x-5">
         <Button onClick={generateRandomArray}>Generate New Array</Button>
-
         <Button variant="secondary" onClick={handleAbortClick}>
           Abort sort
         </Button>
+      </div>
+      <div className="flex flex-row w-full">
+        <div className="flex items-start">
+          Time taken to compute (ms):{" "}
+          {sortingPreformance?.toFixed(3) ?? "awaiting results"}
+        </div>
+        <div className="grow" />
+        <div className="flex items-end">
+          Time taken to render (s):{" "}
+          {renderPreformance?.toFixed(3) ?? "awaiting results"}
+        </div>
       </div>
     </div>
   );

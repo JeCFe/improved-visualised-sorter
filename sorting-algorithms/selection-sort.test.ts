@@ -1,7 +1,7 @@
 import { Bars } from "@/types";
-import { getQuickSort } from "./quick-sort";
+import { getSelectionSort } from ".";
 
-describe("Quick Sort", () => {
+describe("Selection Sort", () => {
   it("should sort an array of bars", () => {
     const unsortedArray = [
       { number: 5, colour: false },
@@ -14,7 +14,7 @@ describe("Quick Sort", () => {
 
     const sortedArray = [...unsortedArray].sort((a, b) => a.number - b.number);
 
-    const animations = getQuickSort(mutatableArray);
+    const animations = getSelectionSort(mutatableArray);
 
     expect(sortedArray).toEqual(mutatableArray);
 
