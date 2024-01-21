@@ -180,8 +180,10 @@ export function SortingVisualised() {
 
       <div className="flex flex-row space-x-5">
         <Button onClick={generateRandomArray}>Generate Random Array</Button>
-        <Button onClick={sortedReverseArray}>Generate Sorted Array</Button>
-        <Button onClick={sortedArray}>Generate Sorted Reverse Array</Button>
+        <Button onClick={sortedArray}>Generate Sorted Array</Button>
+        <Button onClick={sortedReverseArray}>
+          Generate Sorted Reverse Array
+        </Button>
         <Button variant="secondary" onClick={handleAbortClick}>
           Abort sort
         </Button>
